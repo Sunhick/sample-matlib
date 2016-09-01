@@ -3,13 +3,23 @@ DEBUG = -g -O0
 LDFLAGS = 
 
 IDIR = ./inc
+BDIR = ../lib
 
 CCFLAGS = -Wall $(DEBUG) -I $(IDIR)
 
-all: matlib.a
+all: $(BDIR) matlib.a
+
+$(BDIR):
+	mkdir -p $@
 
 matlib.a: matlib.o
-	ar -cvq $@ $<
+	ar -cvq $(BDIR)/$@ $(BDIR)/$<
+	rm $(BDIR)/*.o
 
 matlib.o: src/matlib.c
-	$(CC) -c $(CCFLAGS) $<
+	$(CC) -c -o $(BDIR)/$@ $(CCFLAGS) $<
+
+.PHONY: clean
+clean:
+	-rm *.o *.a
+	-rm -rf $(BDIR)
