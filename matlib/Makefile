@@ -7,12 +7,12 @@ BDIR = ../lib
 
 CCFLAGS = -Wall $(DEBUG) -I $(IDIR)
 
-all: $(BDIR) matlib.a
+all: $(BDIR) libmatlib.a
 
 $(BDIR):
 	mkdir -p $@
 
-matlib.a: matlib.o
+libmatlib.a: matlib.o
 	ar -cvq $(BDIR)/$@ $(BDIR)/$<
 	rm $(BDIR)/*.o
 
